@@ -1,0 +1,47 @@
+﻿@using Swaed.ViewModels
+@model RegisterViewModel
+
+<section class="page-header">
+    <div class="container text-center">
+        <h2>Registration</h2>
+    </div>
+</section>
+
+<section class="login-page">
+    <div class="container">
+        <div class="row justify-content-md-center wrapper">
+            <div class="col-sm-12 col-lg-12">
+                <form asp-action="Register" method="post">
+                    <div class="radio-input">
+                        <label>
+                            <input type="radio" id="value-1" name="AccountType" value="Volunteer" checked>
+                            <span>Volunteer Account</span>
+                        </label>
+                        <label>
+                            <input type="radio" id="value-2" name="AccountType" value="Organization">
+                            <span>Organization Account</span>
+                        </label>
+                        <span class="selection"></span>
+                    </div>
+                    <div class="row input_design">
+                        <div class="col-sm-12 col-lg-12 login-page__form-input-box">
+                            <input asp-for="Email" type="email" placeholder="Email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-6 login-page__form-input-box">
+                            <input asp-for="Password" type="password" placeholder="Enter Password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-6 col-lg-6 login-page__form-input-box">
+                            <input asp-for="ConfirmPassword" type="password" placeholder="Password confirmation" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn" style="margin-top:40px;">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,63 @@
+﻿@page
+@using Swaed.ViewModels
+@model LoginViewModel
+@{
+    Layout = "_Layout"; // Assurez-vous d'utiliser le bon nom de votre mise en page (layout)
+}
+
+<!-- Page Header -->
+<section class="page-header @@extraClassName" data-jarallax data-speed="0.3" data-imgPosition="50% -100%">
+    <div class="page-header__bg jarallax-img"></div><!-- /.page-header-bg -->
+    <div class="page-header__overlay"></div><!-- /.page-header-overlay -->
+    <div class="container text-center">
+        <ul class="page-header__breadcrumb list-unstyled">
+            <!-- Vos éléments de fil d'Ariane ici -->
+        </ul><!-- /.page-breadcrumb list-unstyled -->
+    </div><!-- /.container -->
+</section><!-- /.page-header -->
+<!-- Login Start -->
+<section class="login-page">
+    <div class="container">
+        <div class="row justify-content-md-center wrapper">
+            <div class="col-sm-12 col-lg-12">
+                <h2>Login</h2>
+                <form method="post">
+                    @Html.AntiForgeryToken()
+                    <p>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </p>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 login-page__form-input-box">
+                            <input type="email" name="Email" placeholder="Email" />
+                        </div>
+                        <div class="col-sm-12 col-lg-12 login-page__form-input-box">
+                            <input type="password" name="Password" placeholder="Enter Password" />
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 20px;">
+                        <div class="col-sm-6 col-lg-6">
+                            @* <a href="@Url.Page("Registration")">Don't have account? Create account</a> *@
+                            <a asp-controller="Account" asp-action="register">Don't have account? Create account</a>
+                        </div>
+                        <div class="col-sm-6 col-lg-6" style="text-align: right;">
+                            <a href="/pass">Forget Password?</a>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn">submit</button>
+                </form>
+                <div class="mb-4">
+                    <hr />
+                    <p class="font-weight-bold">Or login with:</p>
+                    <div class="row">
+                        <div class="col-md-12 uae-pass">
+                            <a href="https://stg-id.uaepass.ae/idshub/authorize?response_type=code&client_id=swaed&scope=urn:uae:digitalid:profile:general&state=HnlHOJTkTb66Y5H&redirect_uri=http://127.0.0.1:8000/uaepass&acr_values=urn:safelayer:tws:policies:authentication:level:low">
+                                <img src="~/assets/images/resources/UAEPASS_Sign_in.png" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.d-flex -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- Login End -->

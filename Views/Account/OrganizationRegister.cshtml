@@ -1,0 +1,160 @@
+﻿@using Swaed.Models
+@model Organization
+
+<section class="page-header @@extraClassName" data-jarallax data-speed="0.3" data-imgPosition="50% -100%">
+   <div class="page-header__bg jarallax-img"></div><!-- /.page-header-bg -->
+   <div class="page-header__overlay"></div><!-- /.page-header-overlay -->
+   <div class="container text-center">
+      <ul class="page-header__breadcrumb list-unstyled">
+      </ul><!-- /.page-breadcrumb list-unstyled -->
+   </div><!-- /.container -->
+</section><!-- /.page-header -->
+
+<!-- Login Start -->
+<section class="registration-page">
+   <form asp-action="CompletOrganisation" method="post">
+      @* <input type="hidden" name="id_organisation" value="@Model.User.Id" /> *@
+      <div class="container">
+         <fieldset class="login-info">
+            <legend class="float-none w-auto ">Organisation Informations</legend>
+
+            <div class="row fields wow fadeInUp animated" data-wow-delay="300ms">
+               <div class="col-lg-6 ">
+                  <label class="required">Organization name (English) </label>
+                  <input name="full_name_en" type="text" placeholder="Organization name (English)">
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.FullNameEn)</span>
+               </div>
+               <div class="col-lg-6 ">
+                  <label class="required">Organization name (Arabic) </label>
+                  <input name="full_name_ar" type="text" placeholder="Organization name (Arabic)">
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.FullNameAr)</span>
+               </div>
+            </div>
+            <hr>
+            <div class="row fields  wow fadeInUp animated" data-wow-delay="300ms">
+
+               <div class="col-lg-6 ">
+                  <label class="required">Phone number </label>
+                  <input name="phone" type="text" placeholder="Phone Number">
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.Phone)</span>
+               </div>
+            </div>
+         </fieldset>
+         <fieldset class="login-info">
+            <legend class="float-none w-auto ">Organisation Information</legend>
+            <div class="row fields wow fadeInUp animated" data-wow-delay="300ms">
+               <div class="col-lg-6 ">
+                  <label class="required">City </label>
+                  <select name="city">
+                     <option value="" selected disabled hidden>City?</option>
+                     @* @foreach (var city in Model.Cities)
+                     {
+                        <option value="@city.Name"> @city.Name </option>
+                     } *@
+                  </select>
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.City)</span>
+               </div>
+               <div class="col-lg-6">
+                  <label>Address</label>
+                  <input name="address" type="text" placeholder="Address">
+               </div>
+            </div>
+
+            <div class="row fields wow fadeInUp animated" data-wow-delay="300ms">
+               <div class="col-lg-6 ">
+                  <label class="required"> Activities Sector</label>
+                  <select name="sector">
+                     <option value="" selected disabled hidden>Sector?</option>
+                     <option value="government">Government sector</option>
+                     <option value="semi-government">Semi-government</option>
+                     <option value="private">Private sector</option>
+                     <option value="fondetion">Foundetion</option>
+                     <option value="Volunteer Group">Private sector</option>
+                  </select>
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.Sector)</span>
+               </div>
+               <div class="col-lg-6">
+                  <label>Website</label>
+                  <input name="website" type="text" placeholder="website">
+               </div>
+            </div>
+            <div class="row check_list wow fadeInUp animated" data-wow-delay="300ms">
+               <label class="required" style="margin-bottom: 20px;">Category</label>
+
+               <div class="col-md-6">
+                  @* @foreach(var cat in Model.Categories.Take(9))
+                  {
+                     <input type="checkbox" value="@cat.Title" name="categories[]" id="@cat.Title">
+                     <label class="form-check-label" for="@cat.Title">@cat.Title</label><br>
+                  } *@
+               </div>
+
+               <div class="col-md-6">
+                  @* @foreach(var cat in Model.Categories.Skip(10).Take(10))
+                  {
+                     <input type="checkbox" value="@cat.Title" name="categories[]" id="@cat.Title">
+                     <label class="form-check-label" for="@cat.Title">@cat.Title</label><br>
+                  } *@
+               </div>
+               <span style="color: red;">@Html.ValidationMessageFor(m => m.Categories)</span>
+            </div>
+            <div class="row textra wow fadeInUp animated" data-wow-delay="300ms">
+               <div class="col-lg-12">
+                  <label class="required">Description</label>
+                  <textarea name="description" placeholder="Brief Description"></textarea>
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.Description)</span>
+               </div>
+            </div>
+            <div class="row picture wow fadeInUp animated" data-wow-delay="300ms">
+               <div class="col-lg-12">
+                  <label class="form-label">Organization logo</label><br>
+                  <label for="image-picker">
+                     <img id="image-preview" src="http://dummyimage.com/400x200/f5f5f5/000.jpg&text=Click+here+to+upload+your+logo" alt="your image" />
+                  </label>
+                  <input id="image-picker" name="logo" type="file" accept="image/*" width="400px" height="200"/>
+               </div>
+            </div>
+         </fieldset>
+         <fieldset class="login-info">
+            <legend class="float-none w-auto ">Contact Person</legend>
+            <div class="row fields wow fadeInUp animated" data-wow-delay="300ms">
+               <div class="col-lg-6 ">
+                  <label class="required">Full name (English)</label>
+                  <input name="contact_name_en" type="text" placeholder="Name (English)">
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.ContactNameEn)</span>
+               </div>
+               <div class="col-lg-6 ">
+                  <label class="required">Full name (Arabic)</label>
+                  <input name="contact_name_ar" type="text" placeholder="Name (Arabic)">
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.ContactNameAr)</span>
+               </div>
+            </div>
+                <div class="row fields wow fadeInUp animated" data-wow-delay="300ms">
+                    <div class="col-lg-6 ">
+                        <label class="required">Email</label>
+                        <input name="contact_email" type="text" placeholder="Email">
+                        <span style="color: red;">@Html.ValidationMessageFor(m => m.ContactEmail)</span>
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="required">phone</label>
+                        <input name="contact_phone" type="text" placeholder="Phone Number">
+                        <span style="color: red;">@Html.ValidationMessageFor(m => m.ContactPhone)</span>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="row">
+                <div class="col-md-12 radio">
+                    <input name="approuv" type="checkbox">
+                    <span> I have read the attached Volunteer Release and Undertaking and agree to its terms and conditions. </span>
+                </div>
+            </div>
+            <div class="row butt">
+                <div class="col-md-12 ">
+                    <button class="button">Register</button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </form>
+</section>
+<!-- Login End -->

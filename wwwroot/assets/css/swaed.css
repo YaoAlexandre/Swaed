@@ -1,0 +1,138 @@
+.container h2{
+    margin-bottom: 20px;
+}
+.cont-new{
+    background: #F5F7FA;
+    border: 0.5px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+}
+.field{
+    padding-bottom: 20px;
+}
+.field input{
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+.field label{
+    margin-bottom: 5px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+.form-part {
+    display: none;
+}
+.form-part.active {
+    display: block;
+}
+.progress-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+.progress-bar {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #f3f3f3;
+    z-index: 1;
+}
+.progress {
+    height: 100%;
+    background-color: #4caf50;
+    width: 0;
+    transition: width 0.4s ease;
+}
+.step {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    flex: 1;
+}
+.step .step-number {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: white;
+    margin-bottom: 5px;
+}
+.step.active .step-number,
+.step.completed .step-number {
+    background-color: #4caf50;
+}
+.step-title {
+    font-size: 14px;
+}
+
+/* Les boutton */
+button {
+    border: none;
+    color: white;
+    padding: 10px 28px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px; /* Coins arrondis */
+}
+
+/* Définir les couleurs de fond spécifiques pour chaque classe de bouton */
+.btn-next {
+    background-color: #243ced; /* Bleu */
+}
+
+.btn-submit {
+    background-color: #4CAF50; /* Vert */
+}
+
+.btn-prev {
+    background-color: #f30a0a; /* Rouge */
+}
+
+/* Styles communs pour les boutons */
+.btn-next, .btn-prev, .btn-submit {
+    border: none;
+    color: white;
+    padding: 10px 28px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition-duration: 0.4s; /* Durée de la transition */
+}
+
+/* Styles au survol pour chaque classe de bouton */
+.btn-next:hover {
+    background-color: white; /* Couleur de fond au survol */
+    color: #243ced; /* Couleur du texte au survol */
+    border: 2px solid #243ced; /* Bordure au survol */
+}
+
+.btn-prev:hover {
+    background-color: white; /* Couleur de fond au survol */
+    color: #f30a0a; /* Couleur du texte au survol */
+    border: 2px solid #f30a0a; /* Bordure au survol */
+}
+
+.btn-submit:hover {
+    background-color: white; /* Couleur de fond au survol */
+    color: #4CAF50; /* Couleur du texte au survol */
+    border: 2px solid #4CAF50; /* Bordure au survol */
+}

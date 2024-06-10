@@ -1,0 +1,123 @@
+﻿@using Swaed.Models
+@model Volunteer
+
+<section class="page-header @@extraClassName" data-jarallax data-speed="0.3" data-imgPosition="50% -100%">
+   <div class="page-header__bg jarallax-img"></div><!-- /.page-header-bg -->
+   <div class="page-header__overlay"></div><!-- /.page-header-overlay -->
+   <div class="container text-center">
+      <ul class="page-header__breadcrumb list-unstyled">
+      </ul><!-- /.page-breadcrumb list-unstyled -->
+   </div><!-- /.container -->
+</section><!-- /.page-header -->
+
+<!-- Login Start -->
+<section class="registration-page">
+    <form asp-action="VolunteerRegister" method="post">
+      @* <input type="hidden" name="id_user" value="@Model.User.Id" /> *@
+      <div class="container">
+         <fieldset class="login-info">
+            <legend class="float-none w-auto ">Personel Informations</legend>
+
+            <div class="row fields wow fadeInUp animated" data-wow-delay="300ms">
+               <div class="col-lg-6 ">
+                  <label class="required">First name (English) </label>
+                        <input asp-for="FirstNameEn" name="FirstNameEn" type="text" placeholder="First name (English)">
+                        <span style="color: red;">@Html.ValidationMessageFor(m => m.FirstNameEn)</span>
+               </div>
+               <div class="col-lg-6 ">
+                  <label class="required">First name (Arabic) </label>
+                        <input asp-for="FirstNameAr" name="FirstNameAr" type="text" placeholder="First name (Arabic)">
+               </div>
+            </div>
+            <div class="row fields">
+               <div class="col-lg-6 ">
+                  <label class="required">last name (English) </label>
+                        <input asp-for="LastNameEn" name="LastNameEn" type="text" placeholder="Last name (English)">
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.LastNameEn)</span>
+               </div>
+               <div class="col-lg-6">
+                  <label class="required">last name (Arabic) </label>
+                        <input asp-for="LastNameAr" name="LastNameAr" type="text" placeholder="Last name (Arabic)">
+               </div>
+            </div>
+            <hr>
+            <div class="row fields  wow fadeInUp animated" data-wow-delay="300ms">
+               <div class="col-lg-6">
+                  <label>Date of birth </label>
+                        <input asp-for="Dob" name="dob" type="Date" placeholder="Date of birth">
+               </div>
+               <div class="col-lg-6">
+                  <label class="required">Nationality </label>
+                        <select asp-for="Nationality" name="nationality">
+                     <option value="1">Select your nationality</option>
+                     <option value="2">UAE</option>
+                     <option value="3">USA</option>
+                     <option value="4">Togo</option>
+                  </select>
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.Nationality)</span>
+               </div>
+            </div>
+            <div class="row fields  wow fadeInUp animated" data-wow-delay="300ms">
+               <div class="col-lg-6 ">
+                  <label class="required">Gender </label>
+                        <select asp-for="Gender" name="Gender">
+                     <option value="" selected disabled hidden>Gender?</option>
+                     <option value="male">Male</option>
+                     <option value="female">Female</option>
+                  </select>
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.Gender)</span>
+               </div>
+               <div class="col-lg-6 ">
+                  <label class="required">Phone number </label>
+                        <input asp-for="Phone" name="Phone" type="text" placeholder="Phone Number">
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.Phone)</span>
+               </div>
+            </div>
+         </fieldset>
+         <fieldset class="login-info">
+            <legend class="float-none w-auto ">Residence Info</legend>
+            <div class="row fields wow fadeInUp animated" data-wow-delay="300ms">
+               <div class="col-lg-6">
+                  <label class="required">Emirates ID </label>
+                        <input asp-for="EmirateId" name="EmirateId" type="text" placeholder="Emirates ID">
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.EmirateId)</span>
+               </div>
+               <div class="col-lg-6 ">
+                  <label class="required">Emirates ID expiry Date </label>
+                        <input asp-for="EmirateIdExpiryDate" name="EmirateIdExpiryDate" type="date" placeholder="Emirates ID expiry Date">
+                        <span style="color: red;">@Html.ValidationMessageFor(m => m.EmirateIdExpiryDate)</span>
+               </div>
+            </div>
+
+            <div class="row fields wow fadeInUp animated" data-wow-delay="300ms">
+               <div class="col-lg-6 ">
+                  <label class="required">City </label>
+                        <select asp-for="Residency" name="residency">
+                     <option value="" selected disabled hidden>City?</option>
+                     <option value="fuj">fuj</option>
+                     <option value="bahrain">Bahrain</option>
+                  </select>
+                  <span style="color: red;">@Html.ValidationMessageFor(m => m.Residency)</span>
+               </div>
+               <div class="col-lg-6">
+                  <label>Address</label>
+                  <input name="address" type="text" placeholder="Address">
+               </div>
+            </div>
+         </fieldset>
+         <div class="row">
+            <div class="col-md-12 radio">
+               <input name="checkme" type="checkbox">
+               <span> I have read the attached Volunteer Release and Undertaking and agree to its terms and conditions. </span>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-12 butt">
+               <button class="button">Register</button>
+            </div>
+         </div>
+      </div>
+      </div>
+   </form>
+</section>
+<!-- Login End -->
