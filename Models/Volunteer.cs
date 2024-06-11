@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Swaed.Models
 {
-    public class Volunteer : IdentityUser
+    public class Volunteer : ApplicationUser
     {
         [Required]
         [MaxLength(255)]

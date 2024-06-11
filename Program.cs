@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Swaed.Data;
 using Swaed.Data.Seeds;
+using Swaed.Helpers.Email;
+using Swaed.Models;
 using Swaed.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,17 +13,24 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 // Configuration des services de messagerie (exemple avec SendGrid)
-builder.Services.AddSingleton<Swaed.Services.IEmailSender, EmailSender>();
+//builder.Services.AddSingleton<Swaed.Services.IEmailSender, EmailSender>();
 //builder.Services.Configure<AuthMessageSenderOptions>(Configuration);
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<SwaedDbContext>(options =>
-            options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-            new MySqlServerVersion(new Version(8, 0, 21))));
+//builder.Services.AddDbContext<SwaedDbContext>(options =>
+//            options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+//            new MySqlServerVersion(new Version(8, 0, 21))));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-            .AddEntityFrameworkStores<SwaedDbContext>()
-            .AddDefaultTokenProviders();
+builder.Services.AddDbContext<SwaedDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddSession();
+builder.Services.AddScoped<Swaed.Services.IEmailSender, EmailSender>();
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<SwaedDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -54,7 +63,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
-        var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
         SeedData.Initialize(services, userManager).Wait();
     }
     catch (Exception ex)

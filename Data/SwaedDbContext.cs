@@ -22,13 +22,14 @@ namespace Swaed.Data
 
             // Configurer l'héritage pour les utilisateurs
             modelBuilder.Entity<Volunteer>()
-                .ToTable("Volunteers");
+             .HasBaseType<ApplicationUser>();
 
             modelBuilder.Entity<Organization>()
-                .ToTable("Organizations");
+                .HasBaseType<ApplicationUser>();
 
-            //modelBuilder.Entity<Admin>()
-            //    .ToTable("Admins");
+            modelBuilder.Entity<Admin>()
+               .HasBaseType<ApplicationUser>();
+
         }
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Swaed.Models
 {
-    public class Organization: IdentityUser
+    public class Organization: ApplicationUser
     {
         [Required]
         [MaxLength(255)]
