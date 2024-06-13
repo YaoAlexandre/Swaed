@@ -5,7 +5,6 @@ using System.Net.Mail;
 using System.Text.Encodings.Web;
 using SendGrid.Helpers.Mail;
 using SendGrid;
-using Azure.Core;
 using Swaed.Models;
 using System;
 using System.Text;
