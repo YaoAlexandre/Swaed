@@ -81,7 +81,6 @@
                         <li> <a asp-area="" asp-page="/Gallery">Gallery</a></li>
                         <li> <a asp-area="" asp-page="/Contact">Contact Us</a></li>
                         <li> <a asp-controller="Organization" asp-action="Index">Organisation</a></li>
-                        <li> <a asp-controller="Volunteer" asp-action="Index">Volunteer</a></li>
                     </ul>
                 </div>
                 <div class="main-menu__right">
@@ -90,8 +89,7 @@
             </div>
         </nav>
     </header>
-   @*  <div class="container">
-        <main role="main" class="pb-3"> *@
+    @* @Html.Partial("_UserSidBar") *@
             @RenderBody()
     <section class="cta-one-space"></section>
      @*    </main>

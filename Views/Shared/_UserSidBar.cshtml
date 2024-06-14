@@ -1,0 +1,130 @@
+﻿
+<body class="custom-cursor">
+
+    <div class="custom-cursor__cursor"></div>
+    <div class="custom-cursor__cursor-two"></div>
+
+    <div class="preloader">
+        <div class="preloader__image" style="background-image: url(@Url.Content("~/assets/images/loader.png"));"></div>
+    </div>
+    <!-- /.preloader -->
+    <div class="page-wrapper">
+
+        <section class="page-header page-header--bg-two" data-jarallax data-speed="0.3" data-imgPosition="50% -100%">
+            <div class="header__bg_dash jarallax-img"></div><!-- /.page-header-bg -->
+            <div class="page-header__overlay2"></div><!-- /.page-header-overlay -->
+            <div class="container text-center">
+            </div><!-- /.container -->
+        </section><!-- /.page-header -->
+        <!-- Contact Start -->
+        <section class="dash_vo">
+            <div class="container" style="background: #ebe9e9; padding: 1rem; border-radius: 10px;">
+                <div class="row">
+                    <div class="side">
+                        <div class="logo">
+                            <ul class="menu">
+                                <li class="@(ViewContext.RouteData.Values["action"].ToString() == "UserDashboard" ? "active" : "")">
+                                    <a asp-controller="User" asp-action="Dashboard">
+                                        <i class="fas fa-tachometer-alt"></i>
+                                        <span>Dashboard</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Opportunities" ? "active" : "")">
+                                    <a asp-controller="Opportunities" asp-action="Index">
+                                        <i class="fas fa-calendar" aria-hidden="true"></i>
+                                        <span>Opportunities</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Training" ? "active" : "")">
+                                    <a asp-controller="Training" asp-action="Index">
+                                        <i class="fas fa-tasks"></i>
+                                        <span>Trainings</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Profile" ? "active" : "")">
+                                    <a asp-controller="Profile" asp-action="Index">
+                                        <i class="fas fa-user"></i>
+                                        <span class="nav-item">Profile</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Document" ? "active" : "")">
+                                    <a asp-controller="Document" asp-action="Index">
+                                        <i class="fas fa-file"></i>
+                                        <span class="nav-item">Documents</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Educations" ? "active" : "")">
+                                    <a asp-controller="Educations" asp-action="Index">
+                                        <i class="fas fa-user-graduate"></i>
+                                        <span class="nav-item">Educations</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Experiences" ? "active" : "")">
+                                    <a asp-controller="Experiences" asp-action="Index">
+                                        <i class="fas fa-tasks"></i>
+                                        <span class="nav-item">Experiences</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Skills" ? "active" : "")">
+                                    <a asp-controller="Skills" asp-action="Index">
+                                        <i class="fas fa-layer-group"></i>
+                                        <span class="nav-item">Skills</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Languages" ? "active" : "")">
+                                    <a asp-controller="Languages" asp-action="Index">
+                                        <i class="fas fa-language"></i>
+                                        <span class="nav-item">Languages</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Setting" ? "active" : "")">
+                                    <a asp-controller="Setting" asp-action="Index">
+                                        <i class="fas fa-cog"></i>
+                                        <span class="nav-item">Settings</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="main--content">
+                            <div class="header--wrapper">
+                                <div class="header--title">
+                                    <h4 class="contenu @(ViewContext.RouteData.Values["action"].ToString() == "UserDashboard" ? "activeContenu" : "")">Dashboard</h4>
+                                    <h4 class="contenu @(ViewContext.RouteData.Values["action"].ToString() == "Opportunities" ? "activeContenu" : "")">My Opportunities</h4>
+                                    <h4 class="contenu @(ViewContext.RouteData.Values["action"].ToString() == "Training" ? "activeContenu" : "")">My Training</h4>
+                                    <h4 class="contenu @(ViewContext.RouteData.Values["action"].ToString() == "Profile" ? "activeContenu" : "")">Profile</h4>
+                                    <h4 class="contenu @(ViewContext.RouteData.Values["action"].ToString() == "Document" ? "activeContenu" : "")">Documents</h4>
+                                    <h4 class="contenu @(ViewContext.RouteData.Values["action"].ToString() == "Educations" ? "activeContenu" : "")">Educations</h4>
+                                    <h4 class="contenu @(ViewContext.RouteData.Values["action"].ToString() == "Experiences" ? "activeContenu" : "")">Experiences</h4>
+                                    <h4 class="contenu @(ViewContext.RouteData.Values["action"].ToString() == "Skills" ? "activeContenu" : "")">Skills</h4>
+                                    <h4 class="contenu @(ViewContext.RouteData.Values["action"].ToString() == "Languages" ? "activeContenu" : "")">Languages</h4>
+                                    <h4 class="contenu @(ViewContext.RouteData.Values["action"].ToString() == "Setting" ? "activeContenu" : "")">Account settings</h4>
+                                </div>
+                                <div class="user--info">
+                                    <img src="@Url.Content("~/assets/images/logo3.png")" alt="">
+                                </div>
+                            </div>
+                            @RenderSection("dashboard", required: false)
+                            @RenderSection("opportunities", required: false)
+                            @RenderSection("training", required: false)
+                            @RenderSection("profile", required: false)
+                            @RenderSection("documents", required: false)
+                            @RenderSection("education", required: false)
+                            @RenderSection("experience", required: false)
+                            @RenderSection("skills", required: false)
+                            @RenderSection("language", required: false)
+                            @RenderSection("setting", required: false)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Info End -->
+
+        <section class="cta-one-space"></section>
+        <!-- Call To Action End -->
+        @Html.Partial("pages/layouts/footer")
+        @Html.Partial("pages/layouts/footer-script")
+
+                            <</body>
