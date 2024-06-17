@@ -12,7 +12,7 @@
 
 <!-- Login Start -->
 <section class="registration-page">
-   <form asp-action="CompletOrganisation" method="post">
+    <form asp-action="OrganizationRegister" method="post">
       @* <input type="hidden" name="id_organisation" value="@Model.User.Id" /> *@
       <div class="container">
          <fieldset class="login-info">
@@ -21,12 +21,12 @@
             <div class="row fields wow fadeInUp animated" data-wow-delay="300ms">
                <div class="col-lg-6 ">
                   <label class="required">Organization name (English) </label>
-                  <input name="full_name_en" type="text" placeholder="Organization name (English)">
+                        <input name="FullNameEn" type="text" placeholder="Organization name (English)">
                   <span style="color: red;">@Html.ValidationMessageFor(m => m.FullNameEn)</span>
                </div>
                <div class="col-lg-6 ">
                   <label class="required">Organization name (Arabic) </label>
-                  <input name="full_name_ar" type="text" placeholder="Organization name (Arabic)">
+                        <input name="FullNameAr" type="text" placeholder="Organization name (Arabic)">
                   <span style="color: red;">@Html.ValidationMessageFor(m => m.FullNameAr)</span>
                </div>
             </div>
@@ -35,7 +35,7 @@
 
                <div class="col-lg-6 ">
                   <label class="required">Phone number </label>
-                  <input name="phone" type="text" placeholder="Phone Number">
+                  <input name="Phone" type="text" placeholder="Phone Number">
                   <span style="color: red;">@Html.ValidationMessageFor(m => m.Phone)</span>
                </div>
             </div>
@@ -45,7 +45,7 @@
             <div class="row fields wow fadeInUp animated" data-wow-delay="300ms">
                <div class="col-lg-6 ">
                   <label class="required">City </label>
-                  <select name="city">
+                  <select name="City">
                      <option value="" selected disabled hidden>City?</option>
                      @* @foreach (var city in Model.Cities)
                      {
@@ -63,7 +63,7 @@
             <div class="row fields wow fadeInUp animated" data-wow-delay="300ms">
                <div class="col-lg-6 ">
                   <label class="required"> Activities Sector</label>
-                  <select name="sector">
+                  <select name="Sector">
                      <option value="" selected disabled hidden>Sector?</option>
                      <option value="government">Government sector</option>
                      <option value="semi-government">Semi-government</option>
@@ -75,7 +75,7 @@
                </div>
                <div class="col-lg-6">
                   <label>Website</label>
-                  <input name="website" type="text" placeholder="website">
+                  <input name="Website" type="text" placeholder="website">
                </div>
             </div>
             <div class="row check_list wow fadeInUp animated" data-wow-delay="300ms">
@@ -84,7 +84,7 @@
                <div class="col-md-6">
                   @* @foreach(var cat in Model.Categories.Take(9))
                   {
-                     <input type="checkbox" value="@cat.Title" name="categories[]" id="@cat.Title">
+                     <input type="checkbox" value="@cat.Title" name="Categories[]" id="@cat.Title">
                      <label class="form-check-label" for="@cat.Title">@cat.Title</label><br>
                   } *@
                </div>
@@ -92,7 +92,7 @@
                <div class="col-md-6">
                   @* @foreach(var cat in Model.Categories.Skip(10).Take(10))
                   {
-                     <input type="checkbox" value="@cat.Title" name="categories[]" id="@cat.Title">
+                     <input type="checkbox" value="@cat.Title" name="Categories[]" id="@cat.Title">
                      <label class="form-check-label" for="@cat.Title">@cat.Title</label><br>
                   } *@
                </div>
@@ -101,7 +101,7 @@
             <div class="row textra wow fadeInUp animated" data-wow-delay="300ms">
                <div class="col-lg-12">
                   <label class="required">Description</label>
-                  <textarea name="description" placeholder="Brief Description"></textarea>
+                  <textarea name="Description" placeholder="Brief Description"></textarea>
                   <span style="color: red;">@Html.ValidationMessageFor(m => m.Description)</span>
                </div>
             </div>
@@ -111,7 +111,7 @@
                   <label for="image-picker">
                      <img id="image-preview" src="http://dummyimage.com/400x200/f5f5f5/000.jpg&text=Click+here+to+upload+your+logo" alt="your image" />
                   </label>
-                  <input id="image-picker" name="logo" type="file" accept="image/*" width="400px" height="200"/>
+                  <input id="image-picker" name="Logo" type="file" accept="image/*" width="400px" height="200"/>
                </div>
             </div>
          </fieldset>
@@ -120,24 +120,24 @@
             <div class="row fields wow fadeInUp animated" data-wow-delay="300ms">
                <div class="col-lg-6 ">
                   <label class="required">Full name (English)</label>
-                  <input name="contact_name_en" type="text" placeholder="Name (English)">
+                        <input name="ContactNameEn" type="text" placeholder="Name (English)">
                   <span style="color: red;">@Html.ValidationMessageFor(m => m.ContactNameEn)</span>
                </div>
                <div class="col-lg-6 ">
                   <label class="required">Full name (Arabic)</label>
-                  <input name="contact_name_ar" type="text" placeholder="Name (Arabic)">
+                        <input name="ContactNameAr" type="text" placeholder="Name (Arabic)">
                   <span style="color: red;">@Html.ValidationMessageFor(m => m.ContactNameAr)</span>
                </div>
             </div>
                 <div class="row fields wow fadeInUp animated" data-wow-delay="300ms">
                     <div class="col-lg-6 ">
                         <label class="required">Email</label>
-                        <input name="contact_email" type="text" placeholder="Email">
+                        <input name="ContactEmail" type="text" placeholder="Email">
                         <span style="color: red;">@Html.ValidationMessageFor(m => m.ContactEmail)</span>
                     </div>
                     <div class="col-lg-6">
-                        <label class="required">phone</label>
-                        <input name="contact_phone" type="text" placeholder="Phone Number">
+                        <label class="required">Phone</label>
+                        <input name="ContactPhone" type="text" placeholder="Phone Number">
                         <span style="color: red;">@Html.ValidationMessageFor(m => m.ContactPhone)</span>
                     </div>
                 </div>

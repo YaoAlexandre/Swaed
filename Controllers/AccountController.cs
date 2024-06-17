@@ -7,6 +7,7 @@ using Swaed.Models;
 using Swaed.Services;
 using Swaed.ViewModels;
 using System.Text;
+using System.Web;
 
 namespace Swaed.Controllers
 {
@@ -30,16 +31,7 @@ namespace Swaed.Controllers
         {
             return View();
         }
-        private async Task<string> GenerateConfirmationEmailLink(ApplicationUser user, string token, string scheme)
-        {
-            var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, scheme);
-
-            var emailBody = new StringBuilder();
-            emailBody.Append("<p>Veuillez confirmer votre adresse e-mail en cliquant sur le lien ci-dessous :</p>");
-            emailBody.Append("<p><a href='" + confirmationLink + "'>Lien de confirmation</a></p>");
-
-            return emailBody.ToString();
-        }
+        
 
 
         [HttpPost]
@@ -112,27 +104,20 @@ namespace Swaed.Controllers
 
                 if (result.Succeeded)
                 {
-                    HttpContext.Session.SetString("UserMail", user.Email);
+                    //HttpContext.Session.SetString("UserMail", user.Email);
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var emailSubject = "Confirmation de votre adresse e-mail";
-                    var emailBody = await GenerateConfirmationEmailLink(user, token, "https");
+                    var emailBody = await GenerateConfirmationEmailLink(user, token, "https", model.AccountType);
                     await _emailSender.SendEmailAsync(user.Email, emailSubject, emailBody);
 
+					TempData["SuccessMessage"] = "Account successfully created! Please confirm your email to continue.";
+                    return View();
 
-                    if (model.AccountType == "Volunteer")
-                    {
-                        // Redirection vers la page de complétion d'informations du volontaire
-                        return RedirectToAction("VolunteerRegister", "Account", new { userId = user.Id });
-                    }
-                    else if (model.AccountType == "Organization")
-                    {
-                        // Redirection vers la page de complétion d'informations de l'organisation
-                        return RedirectToAction("OrganizationRegister", "Account", new { userId = user.Id });
-                    }
-                }
+				}
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
+                    TempData["ErrorMessage"] = HttpUtility.HtmlEncode(error.Description);
                 }
             }
             return View(model);
@@ -141,19 +126,18 @@ namespace Swaed.Controllers
 
 
         [HttpGet]
-        public IActionResult VolunteerRegister(string email)
+        public IActionResult VolunteerRegister()
         {
-            var model = new Volunteer { Email = email };
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> VolunteerRegister(Volunteer model)
+        public async Task<IActionResult> VolunteerRegister(Volunteer model, string id)
         {
             if (ModelState.IsValid)
             {
-                var userMail = HttpContext.Session.GetString("UserMail");
-                var user = await _userManager.FindByEmailAsync(userMail) as Volunteer;
+                //var userMail = HttpContext.Session.GetString("UserMail");
+                var user = await _userManager.FindByIdAsync(id) as Volunteer;
                 if (user == null)
                 {
                     return NotFound();
@@ -179,14 +163,16 @@ namespace Swaed.Controllers
                     var roleResult = await _userManager.AddToRoleAsync(user, "Volunteer");
                     if (roleResult.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home");
+						TempData["SuccessMessage"] = "Information successfully saved.";
+						return RedirectToAction("Index", "Volunteer");
                     }
                     else
                     {
                         foreach (var error in roleResult.Errors)
                         {
                             ModelState.AddModelError(string.Empty, error.Description);
-                        }
+							TempData["ErrorMessage"] = HttpUtility.HtmlEncode(error.Description);
+						}
                     }
                 }
                 else
@@ -194,6 +180,7 @@ namespace Swaed.Controllers
                     foreach (var error in updateResult.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
+                        TempData["ErrorMessage"] = HttpUtility.HtmlEncode(error.Description);
                     }
                 }
             }
@@ -203,32 +190,51 @@ namespace Swaed.Controllers
         [HttpGet]
         public IActionResult OrganizationRegister(string email)
         {
-            var model = new Organization { Email = email };
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> OrganizationRegister(Organization model)
+        public async Task<IActionResult> OrganizationRegister(Organization model, string id)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Email);
+                //var userMail = HttpContext.Session.GetString("UserMail");
+                var user = await _userManager.FindByIdAsync(id) as Organization;
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                user.FullNameEn = model.FullNameEn;
+                user.FullNameAr = model.FullNameAr;
+                user.Phone = model.Phone;
+                user.RefNumber = model.RefNumber;
+                user.Logo = model.Logo;
+                user.Sector = model.Sector;
+                user.Description = model.Description;
+                user.ContactNameEn = model.ContactNameEn;
+                user.ContactNameAr = model.ContactNameAr;
+                user.ContactPhone = model.ContactPhone;
+                user.City = model.City;
+                user.Address = model.Address;
+                user.Website = model.Website;
+                user.Categories = model.Categories;
+
+                var result = await _userManager.UpdateAsync(user);
 
                 if (result.Succeeded)
                 {
                     var roleResult = await _userManager.AddToRoleAsync(user, "Organization");
                     if (roleResult.Succeeded)
                     {
-                        // Logique d'inscription de l'organisation ici
-                        // ...
-                        return RedirectToAction("Index", "Home");
+						TempData["SuccessMessage"] = "Information successfully saved.";
+						return RedirectToAction("Index", "Organization");
                     }
                     else
                     {
                         foreach (var error in roleResult.Errors)
                         {
                             ModelState.AddModelError(string.Empty, error.Description);
+							TempData["ErrorMessage"] = HttpUtility.HtmlEncode(error.Description);
                         }
                     }
                 }
@@ -237,6 +243,7 @@ namespace Swaed.Controllers
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
+						TempData["ErrorMessage"] = HttpUtility.HtmlEncode(error.Description);
                     }
                 }
             }
@@ -244,7 +251,7 @@ namespace Swaed.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        public async Task<IActionResult> ConfirmEmail(string userId, string token, string accountType)
         {
             if (userId == null || token == null)
             {
@@ -263,13 +270,37 @@ namespace Swaed.Controllers
             if (result.Succeeded)
             {
                 // Rediriger vers la page de complétion d'informations
-                return RedirectToAction("CompleteProfile", "Account");
+                if (accountType == "Volunteer")
+                {
+                    // Redirection vers la page de complétion d'informations du volontaire
+                    return RedirectToAction("VolunteerRegister", "Account", new {id = user.Id});
+                }
+                else if (accountType == "Organization")
+                {
+                    // Redirection vers la page de complétion d'informations de l'organisation
+                    return RedirectToAction("OrganizationRegister", "Account", new { id = user.Id });
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             else
             {
                 // Gérer l'erreur, par exemple rediriger vers une page d'erreur
                 return RedirectToAction("Error", "Home");
             }
+        }
+
+        private async Task<string> GenerateConfirmationEmailLink(ApplicationUser user, string token, string scheme, string accountType)
+        {
+            var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token, accountType = accountType }, scheme);
+
+            var emailBody = new StringBuilder();
+            emailBody.Append("<p>Veuillez confirmer votre adresse e-mail en cliquant sur le lien ci-dessous :</p>");
+            emailBody.Append("<p><a href='" + confirmationLink + "'>Lien de confirmation</a></p>");
+
+            return emailBody.ToString();
         }
 
     }

@@ -18,12 +18,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<SwaedDbContext>(options =>
-            options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-            new MySqlServerVersion(new Version(8, 0, 21))));
-
 //builder.Services.AddDbContext<SwaedDbContext>(options =>
-//            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//            options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+//            new MySqlServerVersion(new Version(8, 0, 21))));
+
+builder.Services.AddDbContext<SwaedDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddSession();
 builder.Services.AddScoped<Swaed.Services.IEmailSender, EmailSender>();

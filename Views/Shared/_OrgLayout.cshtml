@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <title>@ViewData["Title"] - Swaed</title>
     @Html.Partial("_OrgHeaderLayout")
 </head>
@@ -2712,3 +2715,17 @@
 	</body>
 	<!--end::Body-->
 </html>
+<script>
+	$(document).ready(function () {
+		var successMessage = '@TempData["SuccessMessage"]';
+		var errorMessage = '@TempData["ErrorMessage"]';
+
+		if (successMessage) {
+			toastr.success(successMessage);
+		}
+
+		if (errorMessage) {
+			toastr.error(errorMessage);
+		}
+	});
+</script>
