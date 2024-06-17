@@ -227,6 +227,49 @@ namespace Swaed.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Swaed.Models.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("varchar(13)");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("OrganizationId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("Event");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Event");
+
+                    b.UseTphMappingStrategy();
+                });
+
             modelBuilder.Entity("Swaed.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -235,6 +278,109 @@ namespace Swaed.Migrations
                         .HasColumnType("longtext");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Swaed.Models.Opportunity", b =>
+                {
+                    b.HasBaseType("Swaed.Models.Event");
+
+                    b.Property<string>("AdditionalInformation")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("ApplicationDeadline")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ContactEmail")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ContactName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ContactPhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("InitiativeDescription")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("InitiativeDuration")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("InitiativeName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("InitiativeObjectives")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("LanguageRequirement")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("MinimumAge")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinimumVolunteeringHours")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinimumVolunteeringOpportunities")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NationalityRequirement")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("RequiredVolunteers")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReviewPeriodEnd")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("ReviewPeriodStart")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("RoleDescription")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("SelectionCriteria")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("SelectionProcessDetails")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasDiscriminator().HasValue("Opportunity");
+                });
+
+            modelBuilder.Entity("Swaed.Models.Trainning", b =>
+                {
+                    b.HasBaseType("Swaed.Models.Event");
+
+                    b.Property<string>("CourseTopics")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Objectives")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("RegistrationConditions")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Trainer")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasDiscriminator().HasValue("Trainning");
                 });
 
             modelBuilder.Entity("Swaed.Models.Admin", b =>
@@ -370,6 +516,13 @@ namespace Swaed.Migrations
                     b.Property<DateTime?>("EmirateIdExpiryDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("EventId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("EventId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstNameAr")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -442,6 +595,8 @@ namespace Swaed.Migrations
                     b.Property<string>("Skills")
                         .HasColumnType("longtext");
 
+                    b.HasIndex("EventId1");
+
                     b.ToTable("AspNetUsers", t =>
                         {
                             t.Property("Address")
@@ -512,6 +667,26 @@ namespace Swaed.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Swaed.Models.Event", b =>
+                {
+                    b.HasOne("Swaed.Models.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Swaed.Models.Volunteer", b =>
+                {
+                    b.HasOne("Swaed.Models.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId1");
+
+                    b.Navigation("Event");
                 });
 #pragma warning restore 612, 618
         }

@@ -28,5 +28,7 @@ namespace Swaed.Models
         public string Categories { get; set; }
         public DateTime? LastLoginAt { get; set; }
         public string LastLoginIp { get; set; }
+        public ICollection<Training> CreatedTrainings { get; set; }
+        public ICollection<Opportunity> CreatedOpportunities { get; set; }
     }
 }

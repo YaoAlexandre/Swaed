@@ -46,5 +46,9 @@ namespace Swaed.Models
         public bool? PhoneVerificationStatus { get; set; }
         public DateTime? LastLoginAt { get; set; }
         public string? LastLoginIp { get; set; }
+        public ICollection<Training> Trainings { get; set; }
+        public ICollection<Opportunity> Opportunities { get; set; }
+
+
     }
 }

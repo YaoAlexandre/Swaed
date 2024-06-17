@@ -1,0 +1,306 @@
+﻿@{
+    Layout = "_OrgLayout";
+}
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    .form-part {
+        display: none;
+    }
+
+        .form-part.active {
+            display: block;
+        }
+
+    .progress-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .progress-bar {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: #f3f3f3;
+        z-index: 1;
+    }
+
+    .progress {
+        height: 100%;
+        background-color: #4caf50;
+        width: 0;
+        transition: width 0.4s ease;
+    }
+
+    .step {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        flex: 1;
+    }
+
+        .step .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            background-color: #ccc;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .step.active .step-number,
+        .step.completed .step-number {
+            background-color: #4caf50;
+        }
+
+    .step-title {
+        font-size: 14px;
+    }
+</style>
+<div class="container">
+    <h1>Formulaire Multi-Parties</h1>
+    <div class="progress-container">
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div class="step active" id="step1">
+            <div class="step-number">1</div>
+            <div class="step-title">Event Information</div>
+        </div>
+        <div class="step" id="step2">
+            <div class="step-number">2</div>
+            <div class="step-title">Create Event</div>
+        </div>
+        <div class="step" id="step3">
+            <div class="step-number">3</div>
+            <div class="step-title">Upload Images</div>
+        </div>
+        <div class="step" id="step4">
+            <div class="step-number">4</div>
+            <div class="step-title">Add Location</div>
+        </div>
+        <div class="step" id="step5">
+            <div class="step-number">5</div>
+            <div class="step-title">Assign Roles</div>
+        </div>
+        <div class="step" id="step6">
+            <div class="step-number">6</div>
+            <div class="step-title">Selection Criteria</div>
+        </div>
+    </div>
+    <form id="multi-step-form" method="post">
+        <!-- Étape 1: Event Information -->
+        <div class="form-part active" id="part1">
+            <h2>Event Information</h2>
+            <p>Define the initial requirement of your opportunity that you want to create.</p>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="program">Select Program *</label>
+                    <select class="form-control" id="program" name="Program" required>
+                        <option value="">Select</option>
+                        <option value="Sawaed Emirates Volunteer Society">Sawaed Emirates Volunteer Society</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="causes">Causes *</label>
+                    <select class="form-control" id="causes" name="Causes" required>
+                        <option value="">Select</option>
+                        <!-- Add options here -->
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="event_type">Event Type *</label>
+                    <select class="form-control" id="event_type" name="EventType" required>
+                        <option value="">Select</option>
+                        <option value="Field Volunteering">Field Volunteering</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="event_duration">Event Duration *</label>
+                    <select class="form-control" id="event_duration" name="EventDuration" required>
+                        <option value="">Select</option>
+                        <option value="Single Day">Single Day</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="private_opportunity">Is this a private opportunity? *</label>
+                    <select class="form-control" id="private_opportunity" name="PrivateOpportunity" required>
+                        <option value="">Select</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="category">Category *</label>
+                    <select class="form-control" id="category" name="Category" required>
+                        <option value="">Select</option>
+                        <!-- Add options here -->
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="nextPart()">Suivant</button>
+        </div>
+        <!-- Étape 2: Create Event -->
+        <div class="form-part" id="part2">
+            <h2>Create Event</h2>
+            <p>Provided information of the opportunity will be displayed on volunteers.ae website.</p>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="title_en">Title (English) *</label>
+                    <input type="text" class="form-control" id="title_en" name="TitleEn" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="title_ar">Title (Arabic) *</label>
+                    <input type="text" class="form-control" id="title_ar" name="TitleAr" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="description_en">Description (English) *</label>
+                    <textarea class="form-control" id="description_en" name="DescriptionEn" rows="4" required></textarea>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="description_ar">Description (Arabic) *</label>
+                    <textarea class="form-control" id="description_ar" name="DescriptionAr" rows="4" required></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="event_date">Event Date *</label>
+                    <input type="date" class="form-control" id="event_date" name="EventDate" required>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="start_time">Event Start Time *</label>
+                    <input type="time" class="form-control" id="start_time" name="StartTime" required>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="end_time">Event End Time *</label>
+                    <input type="time" class="form-control" id="end_time" name="EndTime" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="certificate_template">Certificate Template *</label>
+                    <input type="text" class="form-control" id="certificate_template" name="CertificateTemplate" value="Default Certificate" required>
+                </div>
+            </div>
+            <h4>Onsite Supervisor Details from your side:</h4>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="supervisor_name_en">Name of Onsite Supervisor (English) *</label>
+                    <input type="text" class="form-control" id="supervisor_name_en" name="SupervisorNameEn" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="supervisor_name_ar">Name of Onsite Supervisor (Arabic) *</label>
+                    <input type="text" class="form-control" id="supervisor_name_ar" name="SupervisorNameAr" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="supervisor_mobile">Mobile of Onsite Supervisor *</label>
+                    <input type="text" class="form-control" id="supervisor_mobile" name="SupervisorMobile" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="supervisor_email">Email of Onsite Supervisor *</label>
+                    <input type="email" class="form-control" id="supervisor_email" name="SupervisorEmail" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="button" class="btn btn-secondary mr-2" onclick="prevPart()">Précédent</button>
+                <button type="button" class="btn btn-primary" onclick="nextPart()">Suivant</button>
+            </div>
+        </div>
+        <!-- Étape 3: Upload Images -->
+        <div class="form-part" id="part3">
+            <h2>Upload Images</h2>
+            <!-- Add your fields here -->
+            <button type="button" class="btn btn-secondary" onclick="prevPart()">Précédent</button>
+            <button type="button" class="btn btn-primary" onclick="nextPart()">Suivant</button>
+        </div>
+        <!-- Étape 4: Add Location -->
+        <div class="form-part" id="part4">
+            <h2>Add Location</h2>
+            <!-- Add your fields here -->
+            <button type="button" class="btn btn-secondary" onclick="prevPart()">Précédent</button>
+            <button type="button" class="btn btn-primary" onclick="nextPart()">Suivant</button>
+        </div>
+        <!-- Étape 5: Assign Roles -->
+        <div class="form-part" id="part5">
+            <h2>Assign Roles</h2>
+            <!-- Add your fields here -->
+            <button type="button" class="btn btn-secondary" onclick="prevPart()">Précédent</button>
+            <button type="button" class="btn btn-primary" onclick="nextPart()">Suivant</button>
+        </div>
+        <!-- Étape 6: Selection Criteria -->
+        <div class="form-part" id="part6">
+            <h2>Selection Criteria</h2>
+            <!-- Add your fields here -->
+            <button type="button" class="btn btn-secondary" onclick="prevPart()">Précédent</button>
+            <button type="submit" class="btn btn-success">Soumettre</button>
+        </div>
+    </form>
+</div>
+<script>
+    let currentPart = 1;
+    const totalParts = 6;
+
+    function showPart(part) {
+        document.querySelectorAll('.form-part').forEach((element, index) => {
+            element.classList.remove('active');
+            if (index === part - 1) {
+                element.classList.add('active');
+            }
+        });
+
+        document.querySelectorAll('.step').forEach((step, index) => {
+            step.classList.remove('active', 'completed');
+            if (index < part) {
+                step.classList.add('completed');
+            }
+            if (index === part - 1) {
+                step.classList.add('active');
+            }
+        });
+
+        const progress = document.getElementById('progress');
+        const progressWidth = (part - 1) / (totalParts - 1) * 100;
+        progress.style.width = progressWidth + '%';
+    }
+
+    function nextPart() {
+        if (currentPart < totalParts) {
+            currentPart++;
+            showPart(currentPart);
+        }
+    }
+
+    function prevPart() {
+        if (currentPart > 1) {
+            currentPart--;
+            showPart(currentPart);
+        }
+    }
+
+    document.getElementById('multi-step-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        alert('Formulaire soumis avec succès !');
+        // Ici, vous pouvez ajouter du code pour traiter les données du formulaire
+    });
+
+    showPart(currentPart);
+</script>
+
