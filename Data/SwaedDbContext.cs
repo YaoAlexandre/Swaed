@@ -18,6 +18,7 @@ namespace Swaed.Data
         public DbSet<Training> Trainings { get; set; }
         public DbSet<Opportunity> Opportunities { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<EventVolunteer> EventVolunteers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,29 +29,30 @@ namespace Swaed.Data
             modelBuilder.Entity<Organization>().HasBaseType<ApplicationUser>();
             modelBuilder.Entity<Admin>().HasBaseType<ApplicationUser>();
 
-            // Relations many-to-many entre Volunteer et Training
-            modelBuilder.Entity<Volunteer>()
-                .HasMany(v => v.Trainings)
-                .WithMany(t => t.Volunteers)
-                .UsingEntity(j => j.ToTable("VolunteerTraining"));
+            // Configurer l'héritage pour les événements
+            modelBuilder.Entity<Training>().HasBaseType<Event>();
+            modelBuilder.Entity<Opportunity>().HasBaseType<Event>();
 
-            // Relations many-to-many entre Volunteer et Opportunity
-            modelBuilder.Entity<Volunteer>()
-                .HasMany(v => v.Opportunities)
-                .WithMany(o => o.Volunteers)
-                .UsingEntity(j => j.ToTable("VolunteerOpportunity"));
+            // Configurer la relation many-to-many entre Volunteer et Event via EventVolunteer
+            modelBuilder.Entity<EventVolunteer>()
+                .HasKey(ev => new { ev.EventId, ev.VolunteerId });
 
-            // Relation one-to-many entre Organization et Training
+            modelBuilder.Entity<EventVolunteer>()
+                .HasOne(ev => ev.Event)
+                .WithMany(e => e.EventVolunteers)
+                .HasForeignKey(ev => ev.EventId);
+
+            modelBuilder.Entity<EventVolunteer>()
+                .HasOne(ev => ev.Volunteer)
+                .WithMany(v => v.EventVolunteers)
+                .HasForeignKey(ev => ev.VolunteerId);
+
+            // Relation one-to-many entre Organization et Event
             modelBuilder.Entity<Organization>()
-                .HasMany(o => o.CreatedTrainings)
-                .WithOne(t => t.Organizer)
-                .HasForeignKey(t => t.OrganizerId);
-
-            // Relation one-to-many entre Organization et Opportunity
-            modelBuilder.Entity<Organization>()
-                .HasMany(o => o.CreatedOpportunities)
-                .WithOne(o => o.Organizer)
-                .HasForeignKey(o => o.OrganizerId);
+                .HasMany(o => o.Events)
+                .WithOne(e => e.Organizer)
+                .HasForeignKey(e => e.OrganizerId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

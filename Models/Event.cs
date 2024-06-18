@@ -18,9 +18,9 @@ namespace Swaed.Models
         [Required]
         public string Location { get; set; }
 
-        public ICollection<Volunteer> Volunteers { get; set; }
         public string OrganizerId { get; set; }
         public Organization Organizer { get; set; }
-
+        public ICollection<EventVolunteer> EventVolunteers { get; set; } = new List<EventVolunteer>();
     }
+
 }

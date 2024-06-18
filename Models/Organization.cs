@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Swaed.Models
 {
-    public class Organization: ApplicationUser
+    public class Organization : ApplicationUser
     {
         [Required]
         [MaxLength(255)]
@@ -28,7 +28,7 @@ namespace Swaed.Models
         public string Categories { get; set; }
         public DateTime? LastLoginAt { get; set; }
         public string LastLoginIp { get; set; }
-        public ICollection<Training> CreatedTrainings { get; set; }
-        public ICollection<Opportunity> CreatedOpportunities { get; set; }
+        public ICollection<Event> Events { get; set; } = new List<Event>();
     }
+
 }
