@@ -22,6 +22,12 @@ namespace Swaed.Models
         [Required]
         public string SelectionCriteria { get; set; }
 
+        [Required(ErrorMessage = "Cause is required.")]
+        public string Cause { get; set; }
+
+        [Required(ErrorMessage = "Category is required.")]
+        public string Category { get; set; }
+
         [Required]
         public string RoleDescription { get; set; }
 

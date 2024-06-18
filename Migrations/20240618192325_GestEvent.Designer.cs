@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Swaed.Data;
 
@@ -11,9 +12,11 @@ using Swaed.Data;
 namespace Swaed.Migrations
 {
     [DbContext(typeof(SwaedDbContext))]
-    partial class SwaedDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240618192325_GestEvent")]
+    partial class GestEvent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
