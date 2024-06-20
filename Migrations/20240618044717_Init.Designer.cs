@@ -12,8 +12,13 @@ using Swaed.Data;
 namespace Swaed.Migrations
 {
     [DbContext(typeof(SwaedDbContext))]
+<<<<<<<< HEAD:Migrations/20240615145554_intial.Designer.cs
     [Migration("20240615145554_intial")]
     partial class intial
+========
+    [Migration("20240618044717_Init")]
+    partial class Init
+>>>>>>>> origin/features/gestion_event:Migrations/20240618044717_Init.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,6 +82,7 @@ namespace Swaed.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
+<<<<<<<< HEAD:Migrations/20240615145554_intial.Designer.cs
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
                 {
                     b.Property<string>("Id")
@@ -151,6 +157,8 @@ namespace Swaed.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+========
+>>>>>>>> origin/features/gestion_event:Migrations/20240618044717_Init.Designer.cs
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -234,12 +242,137 @@ namespace Swaed.Migrations
 
             modelBuilder.Entity("Swaed.Models.ApplicationUser", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("ApplicationUser");
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Swaed.Models.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrganizerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizerId");
+
+                    b.ToTable("Events");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Event");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Swaed.Models.EventVolunteer", b =>
+                {
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VolunteerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("EventId", "VolunteerId");
+
+                    b.HasIndex("VolunteerId");
+
+                    b.ToTable("EventVolunteers");
                 });
 
             modelBuilder.Entity("Swaed.Models.Admin", b =>
@@ -261,12 +394,24 @@ namespace Swaed.Migrations
                     b.HasBaseType("Swaed.Models.ApplicationUser");
 
                     b.Property<string>("Address")
+<<<<<<<< HEAD:Migrations/20240615145554_intial.Designer.cs
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Categories")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
+========
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Categories")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+>>>>>>>> origin/features/gestion_event:Migrations/20240618044717_Init.Designer.cs
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactEmail")
@@ -327,6 +472,10 @@ namespace Swaed.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Website")
+<<<<<<<< HEAD:Migrations/20240615145554_intial.Designer.cs
+========
+                        .IsRequired()
+>>>>>>>> origin/features/gestion_event:Migrations/20240618044717_Init.Designer.cs
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("AspNetUsers", t =>
@@ -464,6 +613,109 @@ namespace Swaed.Migrations
                     b.HasDiscriminator().HasValue("Volunteer");
                 });
 
+            modelBuilder.Entity("Swaed.Models.Opportunity", b =>
+                {
+                    b.HasBaseType("Swaed.Models.Event");
+
+                    b.Property<string>("AdditionalInformation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ApplicationDeadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ContactEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactPhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InitiativeDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InitiativeDuration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InitiativeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InitiativeObjectives")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LanguageRequirement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MinimumAge")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinimumVolunteeringHours")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinimumVolunteeringOpportunities")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NationalityRequirement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RequiredVolunteers")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReviewPeriodEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ReviewPeriodStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RoleDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SelectionCriteria")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SelectionProcessDetails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Opportunity");
+                });
+
+            modelBuilder.Entity("Swaed.Models.Training", b =>
+                {
+                    b.HasBaseType("Swaed.Models.Event");
+
+                    b.Property<string>("CourseTopics")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Objectives")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegistrationConditions")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Trainer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Training");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -475,7 +727,7 @@ namespace Swaed.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Swaed.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -484,7 +736,7 @@ namespace Swaed.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Swaed.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -499,7 +751,7 @@ namespace Swaed.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Swaed.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -508,11 +760,56 @@ namespace Swaed.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Swaed.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Swaed.Models.Event", b =>
+                {
+                    b.HasOne("Swaed.Models.Organization", "Organizer")
+                        .WithMany("Events")
+                        .HasForeignKey("OrganizerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Organizer");
+                });
+
+            modelBuilder.Entity("Swaed.Models.EventVolunteer", b =>
+                {
+                    b.HasOne("Swaed.Models.Event", "Event")
+                        .WithMany("EventVolunteers")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Swaed.Models.Volunteer", "Volunteer")
+                        .WithMany("EventVolunteers")
+                        .HasForeignKey("VolunteerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Volunteer");
+                });
+
+            modelBuilder.Entity("Swaed.Models.Event", b =>
+                {
+                    b.Navigation("EventVolunteers");
+                });
+
+            modelBuilder.Entity("Swaed.Models.Organization", b =>
+                {
+                    b.Navigation("Events");
+                });
+
+            modelBuilder.Entity("Swaed.Models.Volunteer", b =>
+                {
+                    b.Navigation("EventVolunteers");
                 });
 #pragma warning restore 612, 618
         }
